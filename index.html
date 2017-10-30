@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>MapsAm Test</title>
+  <style media="screen">
+    *{
+      margin: 0px;
+      padding: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="MAP" style="width:870px; height:800px;">
+
+  </div>
+
+  <script src="./assets/mapsam.js" charset="utf-8"></script>
+  <script type="text/javascript">
+     MapsAM.Config({
+       imgSRC:"../test/img/map.jpeg",
+       ImgHG:4016,
+       ImgWH:6016,
+       DivContent:"MAP",
+       Styles: {
+         Punto:{
+           background_color:"#2B3988",
+           border_color:"#fff",
+           width: 25,
+           height: 25,
+           PopOver: {
+             background_color:"#fff"
+           }
+         }
+       }
+     });
+    //  MapsAM.createNewPoint([X,Y],"Texto PopOver");
+
+     MapsAM.createMap();
+ </script>
+</body>
+
+</html>
