@@ -1,5 +1,5 @@
 "use strict";
-/*!Version: 1.1.6*/
+/*!Version: 1.1.8*/
 var Variables = (function () {
     function Variables() {
         this.Locked = false;
@@ -202,6 +202,7 @@ var PopOver = (function () {
         this.Section.classList.add("ac-container");
         this.Elemento_Div.appendChild(this.Section);
         this.Elemento_Div.style.height = Var.getHG() + "px";
+        this.Elemento_Div.style.zIndex = "100";
         this.Elemento_Div.classList.add("Invisible");
         this.Elemento_Div.classList.add("popover");
         this.makeItems();
@@ -220,17 +221,24 @@ var PopOver = (function () {
     PopOver.prototype.getCordenadas = function () {
         return this.coordenadas;
     };
+    PopOver.prototype.rand = function () {
+        return Math.random().toString(36).substr(2);
+    };
+    PopOver.prototype.token = function () {
+        return this.rand() + this.rand();
+    };
     PopOver.prototype.makeItems = function () {
         var i = 1;
         for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
             var item = _a[_i];
+            var token = this.token();
             var div = document.createElement("div");
             var input = document.createElement("input");
             input.type = "radio";
-            input.id = "ac-" + i + "-" + item.titulo;
+            input.id = "ac-" + i + "-" + item.titulo + "-" + token;
             input.name = "accordion-1";
             var label = document.createElement("label");
-            item.titulo ? label.htmlFor = "ac-" + i + "-" + item.titulo : false;
+            item.titulo ? label.htmlFor = "ac-" + i + "-" + item.titulo + "-" + token : false;
             item.titulo ? label.appendChild(document.createTextNode(item.titulo)) : false;
             var article = document.createElement("article");
             article.classList.add("ac-medium");
@@ -239,7 +247,7 @@ var PopOver = (function () {
             item.imgSRC ? image.src = item.imgSRC : false;
             item.imgSRC ? article.appendChild(image) : false;
             item.imgSRC ? article.appendChild(document.createElement("br")) : false;
-            item.descripcion ? p.appendChild(document.createTextNode(item.descripcion)) : false;
+            item.descripcion ? p.innerHTML = item.descripcion : false;
             item.descripcion ? article.appendChild(p) : false;
             div.appendChild(input);
             div.appendChild(label);
@@ -273,6 +281,11 @@ var Punto = (function () {
         this.Elemento.classList.add("Invisible");
         Var.getMap().appendChild(this.Elemento);
         this.Elemento.onclick = function (event) {
+            for (var i = 0; i < document.getElementsByClassName("popover").length; i++) {
+                Var.getMap().getElementsByClassName("popover")[i].classList.remove("Visible");
+                Var.getMap().getElementsByClassName("popover")[i].classList.remove("Invisible");
+                Var.getMap().getElementsByClassName("popover")[i].classList.add("Invisible");
+            }
             _this.showPopOver();
         };
     }
